@@ -42,6 +42,7 @@ cacheSolve <- function(x, ...) {
   m                     # returned cached value
 }
 
+# Just adding this for fun and because I found it useful in understanding the problem
 a <- matrix(rnorm(100), nrow = 10)
 # return object of functions with a as as the argument
 cash <- makeCacheMatrix(a)
