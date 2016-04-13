@@ -9,15 +9,21 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 
-  m <- NULL
-  set <- function(y) {
-    x <<- y
-    m <<- NULL
-  }
-  get <- function() x
-  setInv <- function(Inv) m <<- Inv
-  getInv <- function() m
-  list(set = set, get = get, setInv = setInv, getInv = getInv)
+    m <- NULL
+
+    set <- function(y) {
+      x <<- y
+      m <<- NULL
+    }
+
+    get <- function() x
+
+    setInv <- function(Inv) m <<- Inv
+
+    getInv <- function() m
+
+    list(set = set, get = get, setInv = setInv, getInv = getInv)
+
 }
 
 # cacheSolve checks if x has already been 'solve[d]()' and cached.
@@ -27,22 +33,28 @@ makeCacheMatrix <- function(x = matrix()) {
 # x is a passed in makeCacheMatrix obj
 
 cacheSolve <- function(x, ...) {
-  print('heyx')
-  print(x)
-  m <- x$getInv()
-  # If data is cached return cached value
-  if(!is.null(m)) {
-      message("getting cached data...")
-      return(m)
-  }
 
-  data <- x$get()       # get data from makeCacheMatrix obj
-  m <- solve(data, ...) # solve for data
-  x$setInv(m)           # take the result of computing inverse and cache inverse using setInv
-  m                     # returned cached value
+    print(x)
+
+    m <- x$getInv()
+
+    # If data is cached return cached value
+    if(!is.null(m)) {
+        message("getting cached data...")
+        return(m)
+    }
+
+    data <- x$get()       # get data from makeCacheMatrix obj
+
+    m <- solve(data, ...) # solve for data
+
+    x$setInv(m)           # take the result of computing inverse and cache inverse using setInv
+
+    m                     # returned cached value
+
 }
 
-# Just adding this for fun and because I found it useful in understanding the problem
+# Added for fun not a requirment
 a <- matrix(rnorm(100), nrow = 10)
 # return object of functions with a as as the argument
 cash <- makeCacheMatrix(a)
